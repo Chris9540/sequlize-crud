@@ -1,5 +1,10 @@
 import type { Application } from "express";
-import ValidationSchema from "./generate/ValidationSchema";
+import { DataTypes, Op, Model } from "sequelize";
+declare global {
+    var Models: {
+        [name: string]: any;
+    };
+}
 type ServerOptions = {
     port: number;
     modelsDir: string;
@@ -13,11 +18,8 @@ declare class Server {
     private app;
     constructor(options: ServerOptions);
     initialize(func: InitializeFunction): void;
+    _sequelize(): Promise<void>;
     start(callback?: CallbackFunction): void;
 }
-declare const _default: {
-    Server: typeof Server;
-    ValidationSchema: typeof ValidationSchema;
-};
-export default _default;
-export { Server, ValidationSchema, };
+export default Server;
+export { Server, DataTypes, Model, Op };
